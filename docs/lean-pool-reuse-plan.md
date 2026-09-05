@@ -108,6 +108,23 @@ The root module imports the mathematical topic aggregators so the module tree
 is visible to Lake. It does not import documentation-only History or Reference
 modules, and it has no copied Lean Pool source to reference.
 
+The first substantive FOL API is now present in
+`FormalOLP.FirstOrderLogic.SemanticNotions`. It follows the textbook's
+`syntax-and-semantics/semantic-notions.tex` target and uses Mathlib's existing
+`FirstOrder.Language` syntax and semantics directly. The API defines semantic
+consequence and satisfiability for theories of `L.Sentence`, then proves
+membership, monotonicity, equivalence with unsatisfiability after adjoining a
+negation, and the semantic deduction theorem. Mathlib's bundled
+`Theory.ModelType` carries `Nonempty`, matching the textbook's explicit
+non-empty-domain convention. The current declarations intentionally quantify
+only over sentences; no theorem silently treats an open `L.Formula α` as a
+sentence, and future open-formula work must use Mathlib's assignment-aware
+`T ⊨ᵇ φ` interface or an explicit constants translation.
+
+The module and aggregate pass `lake env lean -E warning
+FormalOLP/FirstOrderLogic/SemanticNotions.lean` and `lake build FormalOLP` on
+the pinned FormalOLP environment. This API does not require Lean Pool source.
+
 ## Wave 2: reproducible build environment
 
 Wave 2 makes the scaffold build on one dependency graph:
@@ -142,6 +159,16 @@ license links are listed in the provenance ledger.
 
 Wave 3 has not started. There is no LeanPool directory or copied third-party
 source in the repository.
+
+The first-order semantics audit confirms that the initial semantic-notions
+chain does not trigger the `fo-zfc` candidate. That project supplies a
+ZF-specific `LZFC` language and `ModelZF` development on top of Mathlib's
+generic model theory, while the current OLP target only needs the generic
+language, structure, realization, and theory APIs already pinned in Mathlib.
+Keep `fo-zfc` gated on a named OLP set-theory/model-theory declaration that
+needs its ZF model classes; if selected, its complete seven-file closure and
+unresolved upstream source reference must be recorded in the provenance
+ledger before copying.
 
 For each source copy, create a reviewable ledger row before or with the vendor
 commit. The row must name:

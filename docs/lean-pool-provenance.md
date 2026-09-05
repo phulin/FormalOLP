@@ -152,6 +152,86 @@ particular, the earlier proposal to copy the full 183-module
 superseded. A future row must identify the OLP declaration that requires the
 closure and report the actual selected module count and file hashes.
 
+## First-order semantics reuse audit
+
+The first concrete OLP target reviewed against the pinned source is the
+generic semantics sequence in the textbook's first-order chapter:
+<code>syntax-and-semantics/first-order-languages.tex</code>,
+<code>terms-formulas.tex</code>, <code>structures.tex</code>,
+<code>assignments.tex</code>, <code>satisfaction.tex</code>, and
+<code>semantic-notions.tex</code>. These sections define terms, formulas,
+structures, variable assignments, term evaluation, satisfaction, validity,
+entailment, satisfiability, and theory models. The current
+<code>FormalOLP.FirstOrderLogic</code> and <code>FormalOLP.ModelTheory</code>
+modules have no declarations that require a third-party source closure yet.
+
+The pinned Mathlib revision already supplies the generic API needed for this
+target. <code>Mathlib.ModelTheory.Basic</code> defines
+<code>FirstOrder.Language</code> and <code>Language.Structure</code>;
+<code>Mathlib.ModelTheory.Syntax</code> defines <code>Term</code>, locally
+nameless <code>BoundedFormula</code>, <code>Formula</code>,
+<code>Sentence</code>, and <code>Theory</code>, together with substitution and
+relabelling; and <code>Mathlib.ModelTheory.Semantics</code> defines
+<code>Term.realize</code>, <code>BoundedFormula.Realize</code>, sentence
+realization, and theory models. This API matches the mathematical target
+while making the textbook's variable-assignment and satisfaction lemmas
+explicit in a small FormalOLP adapter. Tau Ceti contributes no dedicated
+first-order syntax or semantics module in the resolved checkout. Therefore
+the initial semantics target should use Mathlib directly; copying Lean Pool
+at this stage would add a translation burden without supplying a missing
+generic result.
+
+The relevant Lean Pool candidate, <code>fo-zfc</code>, is a later set-theory
+dependency, not a generic first-order semantics library. At [Pool commit
+<code>c8ddda0a64f21cb019720cdda48c94354d4091e7</code>](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7),
+its entry module is <code>LeanPool.FoZfc</code>; the source was introduced by
+[Pool vendor commit
+<code>b161489d3ebf967f8e933aa626bbdf030b335481</code>](https://github.com/Vilin97/lean-pool/commit/b161489d3ebf967f8e933aa626bbdf030b335481)
+and consists of this complete seven-file closure:
+
+| Pool path | Role |
+| --- | --- |
+| <code>LeanPool/FoZfc.lean</code> | entry module importing the closure |
+| <code>LeanPool/FoZfc/Basic.lean</code> | <code>LZFC</code>, set-membership syntax, and model base |
+| <code>LeanPool/FoZfc/FixedSnoc.lean</code> | finite tuple and <code>Fin.snoc</code> lemmas |
+| <code>LeanPool/FoZfc/BoundedFormulaOps.lean</code> | bounded-formula operations and realization lemmas |
+| <code>LeanPool/FoZfc/Tostring.lean</code> | display functions for the ZFC syntax |
+| <code>LeanPool/FoZfc/Axioms.lean</code> | internal and external ZF axiom classes |
+| <code>LeanPool/FoZfc/Replacement.lean</code> | replacement and <code>ModelZF</code> development |
+
+The Pool import commit states that this closure was ported from Lean
+<code>v4.22.0-rc3</code> to Pool's <code>v4.30.0-rc2</code>; the inspected Pool
+snapshot itself uses <code>v4.34.0-rc1</code> and Mathlib revision
+<code>de5ce8a9a66a4aa68a9bdbb35b63a06d34d9ca11</code>. The closure imports
+Mathlib's <code>ModelTheory.Basic</code>, <code>Syntax</code>, and
+<code>Semantics</code>, but specializes them to
+<code>FirstOrder.Language.LZFC</code> and ZF model classes. It is therefore
+unsuitable as the first generic semantics source. If a later OLP declaration
+specifically formalizes the textbook's set-theory chapter and needs
+<code>ModelZF</code> or <code>ext_induction</code>, this seven-file closure is
+the smallest complete Pool closure identified so far; it should be copied
+only after an OLP theorem trigger and a build against FormalOLP's different
+pinned Mathlib revision.
+
+Pool's <code>projects.yml</code> records <code>fo-zfc</code> as Apache-2.0,
+names Tetsuya Ishiu as author, and gives the upstream repository
+<code>https://github.com/ishiut/fo_zfc</code>; Pool's <code>NOTICE</code> lists
+the same project in the Apache-2.0 section. The upstream repository's
+observed commit
+<code>bc2453ee286e4375827b17cfc0e4a0187ee0e09e</code> contains an Apache-2.0
+<code>LICENSE</code> and the same author attribution. Pool metadata does not
+record the upstream source commit used by the vendor import, so
+<code>bc2453...</code> remains discovery and license evidence only, not a
+source-revision claim. A future vendor row must resolve that source SHA,
+preserve the per-file Ishiu headers and Apache notice, and record the Pool
+port as a modification before copying.
+
+Decision: do not copy <code>fo-zfc</code> for the initial first-order
+semantics target. Keep it as a <code>candidate</code> for a named OLP
+set-theory/model-theory declaration; promote its status to
+<code>pending-source-ref</code> only once that declaration is selected and the
+Pool port's upstream source SHA must be resolved.
+
 The Pool snapshot's own <code>NOTICE</code> says that its root aggregation is Apache-2.0
 while original authors retain copyright and the MIT projects retain their
 original notices. FormalOLP should preserve that distinction. A Pool-level
