@@ -140,8 +140,9 @@ Wave 2 makes the scaffold build on one dependency graph:
 These pins are present in lakefile.toml and lean-toolchain. The Tau Ceti
 checkout and Mathlib checkout are available under .lake/packages, and their
 license files identify Apache-2.0. `lake build FormalOLP` passes for the
-current scaffold; the default aggregate also includes the vendored Lean Pool
-target and remains pending while its Incompleteness entry is investigated.
+current scaffold. The default target intentionally remains FormalOLP only;
+the explicit Lean Pool entry build and aggregate remain pending while its
+Incompleteness entry is investigated.
 
 At this report's inspection, the root lake-manifest.json is present in the
 shared working tree and records the direct pins, but it is still uncommitted.
@@ -181,8 +182,10 @@ directly match the seventeen OLP topic entries. They are copied under
 Current vendor verification is partial: eight entry builds pass
 (Computability, FoZfc, FormalizationOfBoundedArithmetic,
 PartialCombinatoryAlgebras, ZFLean, Lean4GlCoalgebras, LeanModelChecking,
-and Lentil).  The Incompleteness entry remains blocked while the inherited
-<code>Formula</code>/<code>Functions</code> performance issue is investigated,
+and Lentil).  The same allowed-axiom audit passes for 11,836 declarations
+across those eight entries.  The Incompleteness entry remains blocked while
+the inherited <code>Formula</code>/<code>Functions</code> performance issue is
+investigated,
 and the aggregate compatibility build has not passed.  The closure counts in
 the table are the pinned Pool snapshot counts; compatibility edits and their
 current hashes are tracked separately in the manifest.
@@ -195,7 +198,7 @@ upstream source commit for these nine projects, so each manifest row records
 <code>upstream_sha=unresolved</code> until that source relation is established.
 The Pool <code>LICENSE</code>, generated <code>NOTICE</code>, and source
 <code>NOTICE.extra.yml</code> are preserved under <code>third_party/lean-pool/</code>;
-five Mathlib compatibility edits are recorded
+Ten Mathlib compatibility edits are recorded
 with original and current hashes in [<code>docs/lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv).
 
 The audit also reviewed the ten optional projects from the earlier plan.

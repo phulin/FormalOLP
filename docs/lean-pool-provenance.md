@@ -27,9 +27,10 @@ Pool package dependency. The copied-source inventory at this audit is:
 | <code>LeanPool/</code> source files | 308 Lean files (nine complete closures) |
 | Lean Pool project entries | Incompleteness, FoZfc, ZFLean, FormalizationOfBoundedArithmetic, PartialCombinatoryAlgebras, Computability, Lean4GlCoalgebras, LeanModelChecking, Lentil |
 | copied third-party license files | <code>third_party/lean-pool/LICENSE</code>, <code>third_party/lean-pool/NOTICE</code>, <code>third_party/lean-pool/NOTICE.extra.yml</code> |
-| local modifications to third-party Lean source | 5 compatibility edits, each recorded in the manifest |
+| local modifications to third-party Lean source | 10 compatibility edits, each recorded in the manifest |
 | provenance rows requiring a file manifest | 311 (308 Lean files plus three notices; see [<code>lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv)) |
 | entry-build verification | 8 of 9 entries pass; Incompleteness remains blocked on inherited <code>Formula</code>/<code>Functions</code> performance |
+| axiom audit | 11,836 declarations across the eight available entries pass the allowed-axiom check; the ninth entry remains pending |
 | aggregate compatibility verification | Pending; no aggregate pass is claimed while Incompleteness is blocked |
 
 The working tree contains the OLP topic scaffold under <code>FormalOLP/</code> and
@@ -237,8 +238,8 @@ Pool's <code>LeanPool/projects.yml</code>, root <code>NOTICE</code>, and
 generated <code>NOTICE</code>, and source <code>NOTICE.extra.yml</code> are copied
 under <code>third_party/lean-pool/</code>.
 Every copied file has an original Pool SHA and a current SHA in
-[<code>lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv). Five source files
-record explicit Mathlib compatibility modifications; the remaining 303 Lean
+[<code>lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv). Ten source files
+record explicit Mathlib compatibility modifications; the remaining 298 Lean
 files are byte-identical.
 
 The copied source is rooted at <code>LeanPool/</code>; the license evidence files
@@ -360,12 +361,13 @@ The first three waves are now defined by the revised order of work:
 | --- | --- | --- | --- |
 | 1. OLP topic scaffold | Create native module names and source mappings from OLP topics before reuse decisions | Working-tree scaffold present: <code>FormalOLP.lean</code>, the topic modules listed in [<code>topic-map.md</code>](topic-map.md), and one small set API. The files are not committed at this audit. | All topic aggregators build and each maps to real OLP paths. |
 | 2. Build environment | Pin Lean, Mathlib, and Tau Ceti and build the scaffold | Working-tree pins and the generated root <code>lake-manifest.json</code> are verified. <code>lake build FormalOLP</code> passes for the scaffold, and <code>lake env lean -E warning test/Compatibility.lean</code> passes while importing Tau Ceti and FormalOLP together. These files remain uncommitted at this audit; this scaffold-only result does not include the pending Lean Pool aggregate. | Commit <code>lakefile.toml</code>, <code>lean-toolchain</code>, the resolved root manifest, and the compatibility smoke test; rerun the clean scaffold build. |
-| 3. Broad scaffold-matched Lean Pool source copying | Copy complete Pool closures that directly match named OLP topics, then add OLP bridges separately | Nine closures are copied under <code>LeanPool/</code> (308 Lean files), with three Pool licensing files under <code>third_party/lean-pool/</code>. Five compatibility edits and all current hashes are recorded in the manifest; eight entry builds pass, while Incompleteness is blocked on inherited <code>Formula</code>/<code>Functions</code> performance and the aggregate remains pending. | Each copied closure must have an immutable Pool SHA, license evidence, path manifest, modification records, nine passing entry builds, and a passing aggregate compatibility check. |
+| 3. Broad scaffold-matched Lean Pool source copying | Copy complete Pool closures that directly match named OLP topics, then add OLP bridges separately | Nine closures are copied under <code>LeanPool/</code> (308 Lean files), with three Pool licensing files under <code>third_party/lean-pool/</code>. Ten compatibility edits and all current hashes are recorded in the manifest; eight entry builds and the eight-entry axiom audit pass, while Incompleteness is blocked on inherited <code>Formula</code>/<code>Functions</code> performance and the aggregate remains pending. | Each copied closure must have an immutable Pool SHA, license evidence, path manifest, modification records, nine passing entry builds, a complete axiom audit, and a passing aggregate compatibility check. |
 
 This status intentionally distinguishes “present in the shared working tree”
-from “committed” and “verified as vendored.” It should be updated when the
-build agent commits the compatibility edits and when each copied entry has a
-passing isolated build in the pinned FormalOLP environment.
+from “committed” and “verified as vendored.” The compatibility edits are
+committed; the vendor wave remains incomplete until the blocked entry has a
+passing isolated build and the aggregate compatibility check passes in the
+pinned FormalOLP environment.
 
 ## Required notice for the first vendor commit
 
