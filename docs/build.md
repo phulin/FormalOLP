@@ -39,11 +39,12 @@ lake build LeanPool.Computability LeanPool.FoZfc \
   LeanPool.PartialCombinatoryAlgebras LeanPool.ZFLean \
   LeanPool.Lean4GlCoalgebras LeanPool.LeanModelChecking LeanPool.Lentil
 lake env lean -E warning test/LeanPoolCompatibility.lean
+lake env lean -E warning test/LeanPoolAxioms.lean
 ```
 
 The Pool snapshot was authored against a different Mathlib revision.  The
-five recorded compatibility import changes are listed in the provenance
-manifest; inherited deprecation warnings and any slow upstream declarations
+Recorded compatibility import changes are listed in the provenance manifest;
+inherited deprecation warnings and any slow upstream declarations
 remain visible in the entry build output.  The aggregate smoke test also
 imports `TauCeti.Algebra.Algebra.Hom` to exercise the concrete Tau Ceti
 boundary.  The full aggregate remains pending if a vendored entry has not
@@ -55,3 +56,11 @@ FoZfc, FormalizationOfBoundedArithmetic, PartialCombinatoryAlgebras, ZFLean,
 Lean4GlCoalgebras, LeanModelChecking, and Lentil.  The Incompleteness entry
 remains blocked while the inherited `Formula`/`Functions` performance issue is
 investigated.  The aggregate compatibility smoke test has not passed yet.
+
+`test/LeanPoolAxioms.lean` walks the declarations recorded in each imported
+`LeanPool.*` module and checks their transitive axioms with
+`Lean.collectAxioms`.  It permits only `Classical.choice`, `propext`, and
+`Quot.sound`; it reports `sorryAx` and all other axioms as failures.  While
+the Incompleteness entry is unavailable, the same audit with that import
+removed passes for 11,836 declarations.  Run the documented command after
+all nine entry roots have built for the complete snapshot.

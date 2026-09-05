@@ -1,5 +1,5 @@
 name = "FormalOLP"
-defaultTargets = ["FormalOLP", "LeanPool"]
+defaultTargets = ["FormalOLP"]
 
 # Keep the project on the same reproducible dependency graph as Tau Ceti.
 [[require]]
