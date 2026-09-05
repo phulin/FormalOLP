@@ -3,10 +3,11 @@ Copyright (c) 2026 ruplet. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: ruplet
 -/
+/- FormalOLP compatibility modification: use the pinned Mathlib module path. -/
 
 -- for a quick demo, jump straight to `theorem add_assoc`
 import Mathlib.Tactic.Core
-import Mathlib.Logic.Basic
+import Mathlib.Basic.Logic.Basic
 import Mathlib.Tactic.Common
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring

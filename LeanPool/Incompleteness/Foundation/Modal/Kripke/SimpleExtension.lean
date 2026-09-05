@@ -3,10 +3,11 @@ Copyright (c) 2026 Palalansoukî. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Palalansoukî
 -/
+/- FormalOLP compatibility modification: use the pinned Mathlib module path and remove a deprecation warning. -/
 
 import LeanPool.Incompleteness.Foundation.Modal.Kripke.Tree
 import LeanPool.Incompleteness.Foundation.Modal.Kripke.Preservation
-import Mathlib.Data.Finite.Sum
+import Mathlib.Basic.Finite.Sum
 
 /-! # SimpleExtension -/
 

@@ -3,13 +3,14 @@ Copyright (c) 2026 ruplet. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: ruplet
 -/
+/- FormalOLP compatibility modification: use the pinned Mathlib module path. -/
 
 -- Source: the example from https://lean-lang.org/doc/reference/latest/Type-Classes/Deriving-Instances/
 -- extended with case for empty type
 import Lean.Elab.Deriving.Basic
-import Mathlib.Logic.IsEmpty.Basic
+import Mathlib.Basic.IsEmpty.Basic
 import Mathlib.Logic.Equiv.Defs
-import Mathlib.Data.Finite.Defs
+import Mathlib.Basic.Finite.Defs
 import Mathlib.Data.List.Nodup
 import Mathlib.Data.List.OfFn
 

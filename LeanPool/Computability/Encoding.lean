@@ -3,10 +3,11 @@ Copyright (c) 2026 Tanner Duve, Elan Roth. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Tanner Duve, Elan Roth
 -/
+/- FormalOLP compatibility modification: use the pinned Mathlib module path. -/
 import LeanPool.Computability.TuringDegree
 import Mathlib.Data.Option.Basic
 import Mathlib.Tactic.Linarith
-import Mathlib.Logic.Denumerable
+import Mathlib.Basic.Denumerable
 import Mathlib.Logic.Encodable.Basic
 import Mathlib.Data.Nat.PSub
 import Mathlib.Data.PFun
