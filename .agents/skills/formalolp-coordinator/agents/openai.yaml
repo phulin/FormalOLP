@@ -1,0 +1,7 @@
+interface:
+  display_name: "FormalOLP Proof Coordinator"
+  short_description: "Coordinate parallel FormalOLP proof progress"
+  default_prompt: "Use $formalolp-coordinator to coordinate parallel Lean formalization progress for the Open Logic Project textbook."
+
+policy:
+  allow_implicit_invocation: false
