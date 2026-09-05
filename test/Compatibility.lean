@@ -13,6 +13,8 @@ textbook-facing module tree while still exercising the shared dependency graph.
 -/
 
 #check AlgHom.algebraMap_toAlgebra_apply
+#check FormalOLP.FirstOrderLogic.SemanticNotions.semantic_consequence_iff_unsatisfiable_negation
+#check FormalOLP.FirstOrderLogic.SemanticNotions.semantic_deduction_theorem
 
 example {α : Type*} (s t : Set α) : s ∩ (s ∪ t) = s := by
   exact FormalOLP.SetsFunctionsRelations.intersection_union_absorption s t

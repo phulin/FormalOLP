@@ -21,7 +21,7 @@ Lean API remain mapped below as documentation-only material.
 | --- | --- | --- |
 | `FormalOLP.SetsFunctionsRelations` | `OpenLogic/content/sets-functions-relations/sets-functions-relations-complete.tex`; `sets/`; `relations/`; `functions/`; `size-of-sets/`; `arithmetization/`; `infinite/` | Initial API: set absorption; remaining source topics scaffolded |
 | `FormalOLP.PropositionalLogic` | `OpenLogic/content/propositional-logic/propositional-logic.tex`; `syntax-and-semantics/` | Scaffold |
-| `FormalOLP.FirstOrderLogic` | `OpenLogic/content/first-order-logic/first-order-logic.tex`; `introduction/`; `syntax-and-semantics/`; `models-theories/`; `proof-systems/`; `sequent-calculus/`; `natural-deduction/`; `tableaux/`; `axiomatic-deduction/`; `completeness/`; `beyond/` | Scaffold |
+| `FormalOLP.FirstOrderLogic` | `OpenLogic/content/first-order-logic/first-order-logic.tex`; `introduction/`; `syntax-and-semantics/`; `models-theories/`; `proof-systems/`; `sequent-calculus/`; `natural-deduction/`; `tableaux/`; `axiomatic-deduction/`; `completeness/`; `beyond/` | Initial API: semantic consequence, monotonicity, unsatisfiable-negation equivalence, and semantic deduction theorem |
 | `FormalOLP.ModelTheory` | `OpenLogic/content/model-theory/model-theory.tex`; `basics/`; `models-of-arithmetic/`; `interpolation/`; `lindstrom/` | Scaffold |
 | `FormalOLP.Computability` | `OpenLogic/content/computability/computability.tex`; `recursive-functions/`; `computability-theory/` | Scaffold |
 | `FormalOLP.TuringMachines` | `OpenLogic/content/turing-machines/turing-machines.tex`; `machines-computations/`; `undecidability/` | Scaffold |
@@ -50,12 +50,26 @@ provenance record.  The initial set result uses Mathlib's `Set` lattice and
 does not assert that any textbook syntax, valuation, proof calculus, or model
 is definitionally the same as a future imported development.
 
-The current initial API is the absorption proposition from
+The current initial APIs are the absorption proposition from
 `OpenLogic/content/sets-functions-relations/sets/proofs-about-sets.tex`:
 
 ```lean
 FormalOLP.SetsFunctionsRelations.intersection_union_absorption
 ```
+
+and the semantic-notions chain from
+`OpenLogic/content/first-order-logic/syntax-and-semantics/semantic-notions.tex`:
+
+```lean
+FormalOLP.FirstOrderLogic.SemanticNotions.semantic_consequence_of_mem
+FormalOLP.FirstOrderLogic.SemanticNotions.semantic_consequence_mono
+FormalOLP.FirstOrderLogic.SemanticNotions.semantic_consequence_iff_unsatisfiable_negation
+FormalOLP.FirstOrderLogic.SemanticNotions.semantic_deduction_theorem
+```
+
+These declarations use Mathlib's `FirstOrder.Language` syntax and semantics
+through a small FormalOLP namespace wrapper.  They do not assert a bridge to a
+proof system or to completeness; those interfaces remain future work.
 
 The source text is not copied into Lean files.  This map is source attribution
 and planning metadata only.

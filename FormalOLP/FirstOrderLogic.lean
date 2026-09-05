@@ -1,3 +1,5 @@
+import FormalOLP.FirstOrderLogic.SemanticNotions
+
 /-!
 # First-order logic
 
@@ -7,5 +9,5 @@ dedicated material for natural deduction, sequents, tableaux, and axiomatic
 deduction; these will remain explicit interfaces rather than being silently
 identified with one another.
 
-This scaffold contains no unproved declarations.
+The first semantic API is implemented in `FormalOLP.FirstOrderLogic.SemanticNotions`.
 -/
