@@ -3,8 +3,9 @@ Copyright (c) 2026 György Kurucz. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: György Kurucz
 -/
+/- FormalOLP compatibility modification: replace deprecated finite definitions import. -/
 import Mathlib.Data.Set.Basic
-import Mathlib.Data.Finite.Defs
+import Mathlib.Basic.Finite.Defs
 
 /-!
 # Linear Temporal Logic and Büchi automata
