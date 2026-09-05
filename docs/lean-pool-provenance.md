@@ -1,14 +1,16 @@
 # FormalOLP provenance and licensing ledger
 
-Status: policy and discovery ledger; no Lean Pool source is copied yet.
+Status: provenance ledger for the nine copied closures under `LeanPool/` at the
+pinned Pool snapshot. The expanded sixteen-project audit records why these
+nine match the current OLP scaffold and why the other seven remain gated or
+rejected.
 
 Date of this audit: 2026-09-05
 
 This document records where source comes from, which exact revisions were
-inspected, and what remains to be verified before source is copied into
-FormalOLP. FormalOLP has no Lean Pool package dependency: selected source
-files will be copied into the repository only when an OLP declaration needs
-them. It is deliberately more conservative than a license summary: a
+inspected, and which compatibility changes were made after copying. FormalOLP
+has no Lean Pool package dependency: the selected source files are a local
+vendor tree. It is deliberately more conservative than a license summary: a
 license named by Lean Pool is recorded as a Lean Pool claim, and a license
 observed in an upstream file is recorded with the exact upstream revision. An
 upstream revision observed today is not silently treated as the revision from
@@ -16,35 +18,42 @@ which source revisions Lean Pool recorded for its files.
 
 ## Current state
 
-The repository currently contains no <code>LeanPool/</code> directory and no copied Lean
-Pool files. The vendored-source inventory is therefore empty:
+The repository contains the nine directly applicable projects listed in the
+inventory below under <code>LeanPool/</code>, as a local library rather than a Lean
+Pool package dependency. The copied-source inventory at this audit is:
 
 | Local inventory | State at this audit |
 | --- | --- |
-| <code>LeanPool/</code> source files | none |
-| Lean Pool project entries | none |
-| copied third-party license files | none |
-| local modifications to third-party Lean source | none |
-| provenance rows requiring a file manifest | none |
+| <code>LeanPool/</code> source files | 308 Lean files (nine complete closures) |
+| Lean Pool project entries | Incompleteness, FoZfc, ZFLean, FormalizationOfBoundedArithmetic, PartialCombinatoryAlgebras, Computability, Lean4GlCoalgebras, LeanModelChecking, Lentil |
+| copied third-party license files | <code>third_party/lean-pool/LICENSE</code>, <code>third_party/lean-pool/NOTICE</code>, <code>third_party/lean-pool/NOTICE.extra.yml</code> |
+| local modifications to third-party Lean source | 5 compatibility edits, each recorded in the manifest |
+| provenance rows requiring a file manifest | 311 (308 Lean files plus three notices; see [<code>lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv)) |
+| entry-build verification | 8 of 9 entries pass; Incompleteness remains blocked on inherited <code>Formula</code>/<code>Functions</code> performance |
+| aggregate compatibility verification | Pending; no aggregate pass is claimed while Incompleteness is blocked |
 
-The working tree does contain the initial OLP topic scaffold under
-<code>FormalOLP/</code>. Its module names and source mapping are recorded in
-[<code>topic-map.md</code>](topic-map.md). The scaffold uses Mathlib where it has an
-initial set API and contains no copied Lean Pool source. This is an intentional boundary:
-the topic API is established from the Open Logic source before reuse choices
-are made.
+The working tree contains the OLP topic scaffold under <code>FormalOLP/</code> and
+the copied source remains separate under <code>LeanPool/</code>. Its module names
+and source mapping are recorded in [<code>topic-map.md</code>](topic-map.md). The
+copied corpus supplies reusable APIs; it does not claim that any OLP theorem,
+syntax translation, or bridge has already been formalized.
 
 ## Provenance policy
 
-FormalOLP follows this order for a future Lean Pool reuse:
+FormalOLP follows this order for Lean Pool reuse. The user's broad request
+permits copying every complete closure that directly matches a named OLP
+topic, so an already-proved one-theorem trigger is not required for the nine
+projects selected in this audit. The copied corpus still does not imply an OLP
+bridge: each bridge must state and prove its representation translation.
 
 1. Define or extend the relevant native OLP topic module in <code>FormalOLP/</code>, with
    its source path in <code>docs/topic-map.md</code>.
-2. State the concrete missing declaration or bridge that motivates reuse. A
-   project is not copied merely because it is related to a topic.
-3. Select the smallest complete Lean Pool source closure that supplies that
-   declaration. If a closure is too coarse, record why its extra modules are
-   unavoidable.
+2. Map the selected project to one or more named OLP topics in
+   <code>docs/topic-map.md</code> and record the concrete APIs it contributes.
+   A project is not copied merely because a tag happens to match.
+3. Select the complete closure for that topic match. If a closure is too
+   coarse, record why its extra modules are unavoidable; do not silently trim
+   a verified entry's imports.
 4. Resolve the exact Lean Pool commit, inspect its <code>projects.yml</code>, <code>NOTICE</code>,
    per-file headers, and source manifest, and record the selected project's
    upstream source revision if Lean Pool records one.
@@ -80,12 +89,14 @@ Every copied project row must have these fields:
 | <code>verification</code> | Closure/build checks and date; do not call an unbuilt copy verified |
 | <code>status</code> | <code>candidate</code>, <code>pending-source-ref</code>, <code>copied</code>, <code>ported</code>, or <code>rejected</code> |
 
-The path manifest should contain one row per copied file with its Lean Pool
-blob SHA and local blob SHA. A future provenance check should fail when a file
-under <code>LeanPool/</code> is absent from that manifest, when a manifest row lacks a
-license and source SHA, or when a modified file has no modification record.
-There is no verification script yet because there is no vendored inventory for
-it to check; adding a script becomes useful with the first source copy.
+The path manifest contains one row per copied file with its original Pool SHA,
+current local SHA, Pool commit, license, upstream-source status, and
+modification record. The check in
+<code>scripts/check-leanpool-provenance.sh</code> fails when a file under
+<code>LeanPool/</code> is absent from that manifest, when a manifest row lacks a
+license and source status, or when a changed file has no modification record.
+The three copied Pool licensing files are tracked as separate manifest rows
+under <code>third_party/lean-pool/</code>.
 
 ## Reproducible dependency environment
 
@@ -130,8 +141,9 @@ treated as the FormalOLP dependency graph:
 
 ## Lean Pool candidate ledger
 
-These are candidates identified in the inspected Pool metadata. They are not
-copied entries. The Pool <code>projects.yml</code> at this snapshot gives the project
+This historical six-row ledger records the initial discovery pass. Its status
+and closure decisions are superseded by the expanded sixteen-project audit
+below. The Pool <code>projects.yml</code> at this snapshot gives the project
 license and repository, but does not give an upstream commit for these six
 projects. The “observed upstream head” values below are immutable refs checked
 on 2026-09-05 for license inspection and discovery only; they are not claimed
@@ -146,11 +158,94 @@ to be the source revision recorded for Lean Pool's copy.
 | <code>formalization-of-bounded-arithmetic</code> / <code>LeanPool.FormalizationOfBoundedArithmetic</code> | An OLP arithmetic bridge requires its bounded-arithmetic model interfaces | MIT (<code>projects.yml</code>, <code>NOTICE.extra.yml</code>) | [ruplet/formalization-of-bounded-arithmetic](https://github.com/ruplet/formalization-of-bounded-arithmetic) | [<code>0477b134d8756fcf312c3b88c1f449e8eec2fea1</code>](https://github.com/ruplet/formalization-of-bounded-arithmetic/tree/0477b134d8756fcf312c3b88c1f449e8eec2fea1); [<code>LICENSE.txt</code>](https://github.com/ruplet/formalization-of-bounded-arithmetic/blob/0477b134d8756fcf312c3b88c1f449e8eec2fea1/LICENSE.txt) is MIT with the literal template copyright line | Not recorded in Pool metadata; resolve before copying | <code>candidate</code> |
 | <code>partial-combinatory-algebras</code> / <code>LeanPool.PartialCombinatoryAlgebras</code> | An OLP lambda-calculus or realizability bridge specifically needs PCA infrastructure | MIT (<code>projects.yml</code>, <code>NOTICE.extra.yml</code>) | [andrejbauer/partial-combinatory-algebras](https://github.com/andrejbauer/partial-combinatory-algebras) | [<code>8a97af138268bfe1a3bd0e2e21333bd70d14c4ee</code>](https://github.com/andrejbauer/partial-combinatory-algebras/tree/8a97af138268bfe1a3bd0e2e21333bd70d14c4ee); [<code>LICENSE</code>](https://github.com/andrejbauer/partial-combinatory-algebras/blob/8a97af138268bfe1a3bd0e2e21333bd70d14c4ee/LICENSE) is MIT and names Andrej Bauer | Not recorded in Pool metadata; resolve before copying | <code>candidate</code> |
 
-The candidate list does not authorize copying all six projects. In
-particular, the earlier proposal to copy the full 183-module
-<code>LeanPool.Incompleteness</code> closure followed by five adjacent projects is
-superseded. A future row must identify the OLP declaration that requires the
-closure and report the actual selected module count and file hashes.
+The earlier candidate list did not authorize copying all six projects; the
+expanded audit now records that these six complete closures match the current
+scaffold and are staged. A future addition still needs an OLP declaration,
+complete closure, and per-file hashes.
+
+## Expanded scaffold audit at the pinned Pool snapshot
+
+The earlier plan listed sixteen projects: six direct projects and ten optional
+projects. The request to copy applicable Pool material was audited against the
+actual seventeen mathematical entries in [<code>topic-map.md</code>](topic-map.md),
+using the complete recursive <code>LeanPool.*</code> import closure at Pool commit
+<code>c8ddda0a64f21cb019720cdda48c94354d4091e7</code>. The counts below are
+authoritative for this snapshot; each includes the entry module and every local
+Lean import reachable from it.
+
+The first six rows were the foundational wave. The next three were selected in
+the same broad request because their declarations directly cover OLP's
+normal-modal, proof-theory, or temporal-logic entries. All nine complete
+closures are now copied under <code>LeanPool/</code>. The remaining seven rows are
+gated or rejected because a topic-name overlap does not identify a textbook
+declaration that they can support.
+
+| Pool entry | OLP scaffold match | Closure | License / authors | Decision and reason |
+| --- | --- | ---: | --- | --- |
+| <code>LeanPool.Incompleteness</code> | FirstOrderLogic, ModelTheory, Incompleteness, NormalModalLogic, IntuitionisticLogic, ProofTheory | 183 files / 54,610 lines | Apache-2.0 / Palalansoukî | **copy** — complete arithmetic, first-order, modal, intuitionistic, and provability closure |
+| <code>LeanPool.FoZfc</code> | FirstOrderLogic, ModelTheory, SetTheory | 7 / 2,221 | Apache-2.0 / Tetsuya Ishiu | **copy** — first-order ZF language, models, axioms, and replacement |
+| <code>LeanPool.ZFLean</code> | SetTheory, SetsFunctionsRelations | 13 / 8,637 | Apache-2.0 / Vincent Trélat | **copy** — internal ZF sets, functions, naturals, integers, and rationals |
+| <code>LeanPool.FormalizationOfBoundedArithmetic</code> | Incompleteness, ModelTheory | 21 / 5,973 | MIT / ruplet | **copy** — bounded-arithmetic syntax, complexity, and model interfaces |
+| <code>LeanPool.PartialCombinatoryAlgebras</code> | LambdaCalculus, Computability | 7 / 1,293 | MIT / Andrej Bauer | **copy** — combinatory and fixed-point infrastructure for lambda-definability bridges |
+| <code>LeanPool.Computability</code> | Computability, TuringMachines, Incompleteness | 7 / 1,554 | Apache-2.0 / Tanner Duve, Elan Roth | **copy** — oracle computation, coding, jumps, and arithmetical hierarchy |
+| <code>LeanPool.Lean4GlCoalgebras</code> | NormalModalLogic, ModelTheory, ProofTheory, Incompleteness | 18 / 12,510 | Apache-2.0 / Madeleine Gignoux | **copy** — Gödel–Löb logic, Craig interpolation, soundness, and completeness directly match OLP's Löb/interpolation material |
+| <code>LeanPool.LeanModelChecking</code> | AppliedModalLogic | 8 / 2,508 | Apache-2.0 / György Kurucz | **copy** — linear temporal logic, Büchi automata, and safety/liveness decomposition match the temporal-logic chapter |
+| <code>LeanPool.Lentil</code> | AppliedModalLogic | 44 / 5,560 | Apache-2.0 / Qiyuan Zhao | **copy** — temporal operators and proof rules match the temporal-logic chapter; its TLA embedding still needs an explicit OLP bridge |
+| <code>LeanPool.MatchingLogic</code> | possible FirstOrderLogic, NormalModalLogic | 54 / 11,244 | Apache-2.0 / Aurélien Eveil, Anthropic, OpenAI | **gated** — custom matching-logic syntax and semantics are not the OLP first-order or normal-modal interfaces; copy only after a named translation/completeness bridge |
+| <code>LeanPool.PumpingCfg</code> | possible Computability, TuringMachines | 12 / 3,985 | Apache-2.0 / Alexander Loitzl, Martin Dvorak | **gated** — context-free grammar pumping is absent from the current OLP source paths; no named scaffold declaration consumes it |
+| <code>LeanPool.SetTheory</code> | possible SetTheory, ModelTheory | 9 / 3,290 | Apache-2.0 / Shuhao Song | **gated** — Kunen inconsistency and elementary embeddings are beyond the current OLP set-theory source scope; select only for a named extension |
+| <code>LeanPool.PCFTheory</code> | possible SetTheory | 7 / 1,123 | MIT / YnirPaz | **gated** — club guessing and PCF cardinal arithmetic are not current OLP declarations |
+| <code>LeanPool.AFormalizationOfBorelDeterminacyInLean</code> | none | 39 / 10,223 | Apache-2.0 / Sven Manthe | **reject** — descriptive set theory and Gale–Stewart determinacy have no scaffold topic |
+| <code>LeanPool.DomainTheory</code> | possible LambdaCalculus | 149 / 50,187 | Apache-2.0 / Catskills Research Company | **reject** — Scott information systems and denotational semantics are outside the OLP lambda-calculus chapters |
+| <code>LeanPool.MRiscX</code> | none | 34 / 7,469 | Apache-2.0 / Julius Marx | **reject** — RISC-V Hoare verification is outside all seventeen OLP topics |
+
+The immutable Pool source URL for every selected entry is its directory at
+[Pool commit <code>c8ddda0a64f21cb019720cdda48c94354d4091e7</code>](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7):
+[Incompleteness](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/Incompleteness),
+[FoZfc](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/FoZfc),
+[ZFLean](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/ZFLean),
+[bounded arithmetic](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/FormalizationOfBoundedArithmetic),
+[PCA](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/PartialCombinatoryAlgebras),
+[Computability](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/Computability),
+[GL coalgebras](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/Lean4GlCoalgebras),
+[model checking](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/LeanModelChecking), and
+[Lentil](https://github.com/Vilin97/lean-pool/tree/c8ddda0a64f21cb019720cdda48c94354d4091e7/LeanPool/Lentil).
+The upstream repository URLs are recorded in Pool's <code>projects.yml</code>;
+Pool does not record an upstream commit for these nine entries, so their
+manifest field remains <code>unresolved</code> rather than inventing a source
+revision.
+
+The two MIT-origin projects retain the complete shared MIT permission notice,
+including the grant, attribution condition, and warranty/disclaimer text, in
+<code>third_party/lean-pool/NOTICE</code> (the notice begins at line 271 and
+ends at line 290). The project-specific MIT attribution records are in that
+same file for <code>FormalizationOfBoundedArithmetic</code> and
+<code>PartialCombinatoryAlgebras</code>, with the source notes also preserved in
+<code>third_party/lean-pool/NOTICE.extra.yml</code>. This verifies preservation
+of the full MIT notice rather than attribution alone; it does not choose a
+license for new FormalOLP code or replace the projects' original notices with
+a new FormalOLP license.
+
+Pool's <code>projects.yml</code> records an upstream commit only for
+<code>matching-logic-completeness</code> (<code>4628a26bb2db117de1a11cbedcb620db9124cdb8</code>);
+the other fifteen rows omit <code>source.commit</code>. The observed Pool
+snapshot commit is therefore the immutable source reference for the staged
+files, while their upstream source revision remains <code>unresolved</code> until
+the vendor workflow identifies it. License and author evidence is preserved in
+Pool's <code>LeanPool/projects.yml</code>, root <code>NOTICE</code>, and
+<code>NOTICE.extra.yml</code> at the pinned commit; the Pool <code>LICENSE</code>,
+generated <code>NOTICE</code>, and source <code>NOTICE.extra.yml</code> are copied
+under <code>third_party/lean-pool/</code>.
+Every copied file has an original Pool SHA and a current SHA in
+[<code>lean-pool-manifest.tsv</code>](lean-pool-manifest.tsv). Five source files
+record explicit Mathlib compatibility modifications; the remaining 303 Lean
+files are byte-identical.
+
+The copied source is rooted at <code>LeanPool/</code>; the license evidence files
+remain at <code>third_party/lean-pool/</code>. The manifest's path column is the
+repository-relative canonical path for both locations. The manifest does not
+authorize copying the gated rows: a later addition needs its own complete
+closure, upstream-source decision, license evidence, and per-file hashes.
 
 ## First-order semantics reuse audit
 
@@ -263,19 +358,20 @@ The first three waves are now defined by the revised order of work:
 
 | Wave | Scope | Current progress | Exit evidence |
 | --- | --- | --- | --- |
-| 1. OLP topic scaffold | Create native module names and source mappings from OLP topics before reuse decisions | Working-tree scaffold present: <code>FormalOLP.lean</code>, the topic modules listed in [<code>topic-map.md</code>](topic-map.md), and one small set API. The files are not committed at this audit. | All topic aggregators build, each maps to real OLP paths, and no copied Lean Pool source is referenced. |
-| 2. Build environment | Pin Lean, Mathlib, and Tau Ceti and build the scaffold | Working-tree pins and the generated root <code>lake-manifest.json</code> are verified. <code>lake build</code> passes for 451 jobs, and <code>lake env lean -E warning test/Compatibility.lean</code> passes while importing Tau Ceti and FormalOLP together. These files remain uncommitted at this audit. | Commit <code>lakefile.toml</code>, <code>lean-toolchain</code>, the resolved root manifest, and the compatibility smoke test; rerun the clean build. |
-| 3. Need-driven Lean Pool source copying | Copy only the smallest complete Pool closure needed by a named OLP declaration | Not started. <code>LeanPool/</code> is absent and the candidate rows above remain uncopied. | A candidate has an OLP trigger, immutable Pool SHA, resolved upstream source SHA, license evidence, path manifest, and a passing isolated build. |
+| 1. OLP topic scaffold | Create native module names and source mappings from OLP topics before reuse decisions | Working-tree scaffold present: <code>FormalOLP.lean</code>, the topic modules listed in [<code>topic-map.md</code>](topic-map.md), and one small set API. The files are not committed at this audit. | All topic aggregators build and each maps to real OLP paths. |
+| 2. Build environment | Pin Lean, Mathlib, and Tau Ceti and build the scaffold | Working-tree pins and the generated root <code>lake-manifest.json</code> are verified. <code>lake build FormalOLP</code> passes for the scaffold, and <code>lake env lean -E warning test/Compatibility.lean</code> passes while importing Tau Ceti and FormalOLP together. These files remain uncommitted at this audit; this scaffold-only result does not include the pending Lean Pool aggregate. | Commit <code>lakefile.toml</code>, <code>lean-toolchain</code>, the resolved root manifest, and the compatibility smoke test; rerun the clean scaffold build. |
+| 3. Broad scaffold-matched Lean Pool source copying | Copy complete Pool closures that directly match named OLP topics, then add OLP bridges separately | Nine closures are copied under <code>LeanPool/</code> (308 Lean files), with three Pool licensing files under <code>third_party/lean-pool/</code>. Five compatibility edits and all current hashes are recorded in the manifest; eight entry builds pass, while Incompleteness is blocked on inherited <code>Formula</code>/<code>Functions</code> performance and the aggregate remains pending. | Each copied closure must have an immutable Pool SHA, license evidence, path manifest, modification records, nine passing entry builds, and a passing aggregate compatibility check. |
 
 This status intentionally distinguishes “present in the shared working tree”
 from “committed” and “verified as vendored.” It should be updated when the
-build agent commits the environment and when the first Lean Pool project is
-actually selected.
+build agent commits the compatibility edits and when each copied entry has a
+passing isolated build in the pinned FormalOLP environment.
 
 ## Required notice for the first vendor commit
 
-The first vendor commit should include a <code>LeanPool/NOTICE</code> or equivalent
-ledger reference that names:
+The vendor commits include <code>third_party/lean-pool/LICENSE</code>,
+<code>third_party/lean-pool/NOTICE</code>, and
+<code>third_party/lean-pool/NOTICE.extra.yml</code>; the ledger and manifest together name:
 
 - the exact Lean Pool commit and immutable URL;
 - each copied project and its original upstream URL and source SHA;
@@ -285,6 +381,6 @@ ledger reference that names:
 - the FormalOLP compatibility changes made later; and
 - the OLP source attribution separately when a bridge adapts textbook material.
 
-Until that commit exists, no README, build file, or theorem should describe
-Lean Pool as vendored or claim that a Lean Pool license has been applied to
-FormalOLP code.
+The copied Pool license applies to the copied source under <code>LeanPool/</code>
+and does not select a license for new FormalOLP code. OLP source attribution
+remains the separate CC BY 4.0 record above.

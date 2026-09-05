@@ -44,9 +44,10 @@ Lean API remain mapped below as documentation-only material.
 The root `FormalOLP.lean` imports the mathematical topic aggregators so the
 module tree is visible to the build.  History and Reference remain mapped as
 documentation-only source parts and have no empty Lean modules.  The scaffold
-does not import Lean Pool.  Lean Pool
-will be added only when a specific formalization needs it, with its own
-provenance record.  The initial set result uses Mathlib's `Set` lattice and
+does not import Lean Pool.  A separate local `LeanPool/` library now carries
+the complete, topic-matched Pool closures listed below; it has its own
+provenance record and is not an OLP bridge.  The initial set result uses
+Mathlib's `Set` lattice and
 does not assert that any textbook syntax, valuation, proof calculus, or model
 is definitionally the same as a future imported development.
 
@@ -74,6 +75,28 @@ proof system or to completeness; those interfaces remain future work.
 The source text is not copied into Lean files.  This map is source attribution
 and planning metadata only.
 
+## Lean Pool reuse coverage
+
+The following complete Lean Pool closures are present as separate source
+coverage for the named scaffold topics.  Their inclusion records reusable
+formal developments; it does not claim that the OLP text has already been
+formalized or that the copied APIs are definitionally identical to future
+FormalOLP declarations.  File-level provenance, licenses, and compatibility
+edits are recorded in [`lean-pool-provenance.md`](lean-pool-provenance.md) and
+[`lean-pool-manifest.tsv`](lean-pool-manifest.tsv).
+
+| Lean Pool closure | Matching FormalOLP topics | Coverage rationale |
+| --- | --- | --- |
+| `Incompleteness` | `FirstOrderLogic`, `ModelTheory`, `Incompleteness`, `NormalModalLogic`, `IntuitionisticLogic`, `ProofTheory` | First-order syntax/semantics, metatheory, incompleteness, modal and intuitionistic proof developments |
+| `FoZfc` | `FirstOrderLogic`, `ModelTheory`, `SetTheory` | First-order semantics and ZFC/set-theory formalization |
+| `ZFLean` | `SetTheory`, `SetsFunctionsRelations` | Sets, functions, relations, and ZF development |
+| `FormalizationOfBoundedArithmetic` | `Incompleteness`, `ModelTheory` | Arithmetization and bounded-arithmetic metatheory |
+| `PartialCombinatoryAlgebras` | `LambdaCalculus`, `Computability` | Combinatory models and computability foundations |
+| `Computability` | `Computability`, `TuringMachines`, `Incompleteness` | Computability and machine/undecidability infrastructure |
+| `Lean4GlCoalgebras` | `NormalModalLogic`, `ModelTheory`, `ProofTheory`, `Incompleteness` | Coalgebraic modal logic and associated proof/model theory |
+| `LeanModelChecking` | `AppliedModalLogic` | Model checking and temporal/modal verification |
+| `Lentil` | `AppliedModalLogic` | Temporal logic and model-checking developments |
+
 ## Open Logic Project attribution
 
 The Open Logic Text source is copyright the Open Logic Project and is licensed
@@ -84,4 +107,5 @@ The repository's source and license are at
 adapted textbook material, it must preserve that attribution, identify changes,
 and link to the license.  This CC BY 4.0 attribution is intentionally separate
 from the licenses and provenance records for any future Lean or Lean Pool code;
-the scaffold currently vendors no Lean Pool source.
+the topic scaffold itself contains no copied Pool declarations, while the
+separate `LeanPool/` library is covered by its own provenance record.

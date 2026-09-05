@@ -11,7 +11,7 @@ Install the pinned toolchain, resolve dependencies, and build the library:
 ```sh
 elan toolchain install leanprover/lean4:v4.34.0-rc2
 lake update
-lake build
+lake build FormalOLP
 ```
 
 The `FormalOLP` library target includes modules below `FormalOLP/` and the
@@ -27,3 +27,31 @@ module is the useful import-boundary check:
 lake build TauCeti.Algebra.Algebra.Hom
 lake env lean -E warning test/Compatibility.lean
 ```
+
+The vendored Lean Pool snapshot is a local `LeanPool` library with nine
+explicit entry roots.  Verify its path and hash inventory before building the
+entries:
+
+```sh
+scripts/check-leanpool-provenance.sh
+lake build LeanPool.Computability LeanPool.FoZfc \
+  LeanPool.FormalizationOfBoundedArithmetic LeanPool.Incompleteness \
+  LeanPool.PartialCombinatoryAlgebras LeanPool.ZFLean \
+  LeanPool.Lean4GlCoalgebras LeanPool.LeanModelChecking LeanPool.Lentil
+lake env lean -E warning test/LeanPoolCompatibility.lean
+```
+
+The Pool snapshot was authored against a different Mathlib revision.  The
+five recorded compatibility import changes are listed in the provenance
+manifest; inherited deprecation warnings and any slow upstream declarations
+remain visible in the entry build output.  The aggregate smoke test also
+imports `TauCeti.Algebra.Algebra.Hom` to exercise the concrete Tau Ceti
+boundary.  The full aggregate remains pending if a vendored entry has not
+finished building; the current Incompleteness Metamath closure includes a
+resource-intensive inherited declaration.
+
+Current vendor verification has eight passing entry builds: Computability,
+FoZfc, FormalizationOfBoundedArithmetic, PartialCombinatoryAlgebras, ZFLean,
+Lean4GlCoalgebras, LeanModelChecking, and Lentil.  The Incompleteness entry
+remains blocked while the inherited `Formula`/`Functions` performance issue is
+investigated.  The aggregate compatibility smoke test has not passed yet.
