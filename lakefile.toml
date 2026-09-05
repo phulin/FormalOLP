@@ -1,0 +1,17 @@
+name = "FormalOLP"
+defaultTargets = ["FormalOLP"]
+
+# Keep the project on the same reproducible dependency graph as Tau Ceti.
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "5fcc6656691ed31965746c369f41fa75e567ac9d"
+
+[[require]]
+name = "TauCeti"
+git = "https://github.com/TauCetiProject/TauCeti"
+rev = "8525a756ec80a2338bf75a42ca80f19c47ead468"
+
+[[lean_lib]]
+name = "FormalOLP"
+globs = ["FormalOLP.*"]

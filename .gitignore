@@ -1,0 +1,10 @@
+.lake/
+*.olean
+*.ilean
+*.c
+*.so
+*.dynlib
+*.dll
+*.exe
+*.native
+*.trace
