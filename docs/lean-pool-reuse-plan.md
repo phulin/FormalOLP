@@ -54,6 +54,12 @@ and a checked theorem chain. The exact file-to-source mapping is in
 registered native files and rejects omitted rows, hash changes, active
 `LeanPool` imports, and missing attribution references.
 
+Those seventeen roots are the repository's scaffold/API foundation, not a
+claim that every Open Logic Text section is represented. The complete 722-file
+source denominator, including orphaned and documentation material, is audited
+in [`docs/book-coverage/README.md`](book-coverage/README.md), with an
+executable check at `scripts/check-book-coverage.py`.
+
 This is scaffold completion at the repository's foundation level. It does not
 claim completion of the Open Logic Text. The ledger records the remaining
 chapter-level gaps: first-order proof-system completeness; modal Hilbert

@@ -17,6 +17,15 @@ directory, such as `FormalOLP/FirstOrderLogic/`, without changing the public
 topic entry point.  Editorial source parts that do not define a mathematical
 Lean API remain mapped below as documentation-only material.
 
+The seventeen mathematical topic roots in this table describe the FormalOLP
+scaffold and its current API boundaries; they are not an all-book coverage
+claim. The pinned OpenLogic checkout contains 722 content TeX files, including
+shared containers, orphaned material, history, and reference pages. The
+exhaustive file and source-unit audit is in
+[`docs/book-coverage/README.md`](book-coverage/README.md); run
+`python3 scripts/check-book-coverage.py` to verify its source closure and
+reviewer union.
+
 | Lean module | OpenLogic source path(s) | Current scope |
 | --- | --- | --- |
 | `FormalOLP.SetsFunctionsRelations` | `OpenLogic/content/sets-functions-relations/sets-functions-relations-complete.tex`; `sets/`; `relations/`; `functions/`; `size-of-sets/`; `arithmetization/`; `infinite/` | Initial API: set absorption and native function composition/inverse chain; remaining source topics scaffolded |
