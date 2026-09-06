@@ -1,9 +1,9 @@
+import FormalOLP.ManyValuedLogic.Kleene
+
 /-!
 # Many-valued logic
 
-Planned API for many-valued syntax and semantics, three-valued systems,
-infinite-valued systems, and their sequent calculi.  The source directories
-are mapped in `docs/topic-map.md`.
-
-No many-valued semantics is asserted yet.
+The K3 syntax-independent tables and valuation API are in
+`FormalOLP.ManyValuedLogic.Kleene`.  Additional many-valued systems can build
+on this child module without changing the shared propositional formula type.
 -/

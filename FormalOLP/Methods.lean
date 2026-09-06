@@ -1,9 +1,9 @@
+import FormalOLP.Methods.Induction
+
 /-!
 # Mathematical methods
 
-Planned API for the source's material on proofs and induction.  This module is
-about reusable proof patterns and induction principles, while formal theorem
-development remains in the subject modules that use them.
-
-No declarations are made yet.
+The reusable induction principles are collected in
+`FormalOLP.Methods.Induction`.  They provide the ordinary and strong natural
+number principles together with relation and measure induction.
 -/
