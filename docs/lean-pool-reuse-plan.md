@@ -43,6 +43,38 @@ family used as guidance, native declarations, and a proof boundary. Future
 work must add a concrete bridge row before claiming a source family is
 integrated.
 
+## Scaffold completion audit
+
+The original scaffold in commit `bcc4f89` introduced seventeen mathematical
+topic roots. The current `FormalOLP.lean` imports all seventeen named
+aggregators, and each aggregator imports a native child containing definitions
+and a checked theorem chain. The exact file-to-source mapping is in
+`docs/topic-map.md`; the proof-bearing file inventory and SHA-256 checks are in
+`docs/native-integration-manifest.tsv`. The provenance checker reports 24
+registered native files and rejects omitted rows, hash changes, active
+`LeanPool` imports, and missing attribution references.
+
+This is scaffold completion at the repository's foundation level. It does not
+claim completion of the Open Logic Text. The ledger records the remaining
+chapter-level gaps: first-order proof-system completeness; modal Hilbert
+systems/canonical completeness; intuitionistic completeness; full ZF/ZFC;
+arithmetization, representability, and incompleteness beyond Robinson Q;
+concrete-machine/`RecursiveIn` equivalence; model-theory interpolation and
+Lindström results; temporal logic; second-order function variables and
+metatheory; many-valued systems beyond K3; lambda Church--Rosser,
+normalization, and definability; counterfactual sphere representation; and
+proof-theory cut elimination and normalization.
+
+The native integrations deliberately contain no active LeanPool imports. The
+dependency graph is pinned by `lakefile.toml` to the recorded Mathlib and Tau
+Ceti revisions, and `docs/native-integration-manifest.tsv` distinguishes
+Pool-guided `native-adaptation` files from newly authored `native-olp` and
+Mathlib-backed `native-mathlib` files. Open Logic CC BY 4.0 attribution and
+the preserved Pool license/notice records are kept separate from any future
+license decision for newly authored Lean code. The completed foundation gates
+are the full library build, warning-as-error root check, declaration axiom
+audit, compatibility smoke test, and native provenance/negative fixtures.
+
 ## Verification
 
 Run the native checks after changes:
