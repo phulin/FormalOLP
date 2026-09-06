@@ -1,3 +1,5 @@
+import FormalOLP.Computability.TuringReducibility
+
 /-!
 # Computability
 
@@ -7,5 +9,5 @@ theory material in the source.  Concrete Turing-machine interfaces belong to
 `FormalOLP.TuringMachines`; arithmetic applications belong to
 `FormalOLP.Incompleteness`.
 
-This module is a topic boundary only at present.
+The first reducibility chain is implemented in `TuringReducibility`.
 -/
