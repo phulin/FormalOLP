@@ -1,3 +1,5 @@
+import FormalOLP.AppliedModalLogic.Epistemic
+
 /-!
 # Applied modal logic
 
@@ -6,5 +8,6 @@ truth at worlds, bisimulations, public announcements, possible histories, and
 temporal accessibility properties.  These are the two source subparts listed
 in `docs/topic-map.md`.
 
-No application-specific semantics is declared yet.
+The epistemic relational-model chain is implemented in
+`FormalOLP.AppliedModalLogic.Epistemic`.
 -/

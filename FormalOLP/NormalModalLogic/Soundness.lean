@@ -1,11 +1,11 @@
 import FormalOLP.NormalModalLogic.Semantics
 
 /-!
-# Soundness and frame correspondence for K and T
+# Soundness and frame correspondence for K, T, B, D, 4, and 5
 
-These are the first theorem chain in the OLP normal-modal-logic topic:
-necessitation is valid on every frame, the distribution axiom K is valid on
-every frame, and the reflexivity axiom T is valid exactly on reflexive frames.
+This theorem chain in the OLP normal-modal-logic topic proves necessitation,
+the distribution axiom K, and the frame correspondences for T, B, D, 4, and
+5.
 The proofs use the native syntax and semantics from the preceding modules.
 
 The formula definitions correspond to Pool's `LO.Axioms.K`, `LO.Axioms.T`,
@@ -16,11 +16,14 @@ as Pool's `LO.Modal.Formula.Kripke.ValidOnModel.axiomK`,
 `LO.Modal.Formula.Kripke.ValidOnFrame.axiomK`,
 `LO.Modal.Formula.Kripke.ValidOnModel.nec`, and
 `LO.Modal.Formula.Kripke.ValidOnFrame.nec` in `Kripke/Basic.lean`.
-The T and 4 correspondence arguments are new direct proofs of the facts
+The T, B, 4, and 5 correspondence arguments are new direct proofs of the facts
 named `LO.Modal.Kripke.reflexive_of_validate_AxiomT` and
 `LO.Modal.Kripke.transitive_of_validate_AxiomFour` in
 `Kripke/Hilbert/Geach.lean`; D has no matching generic Pool correspondence
 lemma in the pinned snapshot, so both D directions here are new native proofs.
+The B and 5 schemas and their symmetry and Euclidean correspondences follow
+the five correspondence facts in
+`OpenLogic/content/normal-modal-logic/frame-definability/definability.tex`.
 -/
 
 namespace FormalOLP.NormalModalLogic
@@ -116,6 +119,103 @@ theorem frame_valid_axiomFour_iff_transitive {F : Frame} :
   constructor
   · exact transitive_of_frame_valid_axiomFour
   · exact frame_valid_axiomFour_of_transitive
+
+/-- The symmetry axiom B. -/
+def axiomB (φ : Formula Atom) : Formula Atom :=
+  .imp φ (Formula.box (Formula.diamond φ))
+
+theorem frame_valid_axiomB_of_symmetric {F : Frame} (hR : F.Symmetric) :
+    F.Valid (axiomB (.atom 0) : Formula Nat) := by
+  intro valuation x
+  let M : Model Nat := Model.fromFrame F valuation
+  change Satisfies M x (.atom 0) → Satisfies M x (Formula.box (Formula.diamond (.atom 0)))
+  intro h_atom y hxy
+  change Satisfies M y (Formula.diamond (.atom 0))
+  change Satisfies M y (Formula.box (Formula.neg (.atom 0))) → False
+  intro hbox_neg
+  exact (hbox_neg x (hR hxy)) h_atom
+
+theorem symmetric_of_frame_valid_axiomB {F : Frame}
+    (hB : F.Valid (axiomB (.atom 0) : Formula Nat)) : F.Symmetric := by
+  intro x y hxy
+  by_cases h_yx : F.Rel y x
+  · exact h_yx
+  · let valuation : F.World → Nat → Prop := fun w a => ¬F.Rel y w ∧ a = 0
+    let M : Model Nat := Model.fromFrame F valuation
+    have hB_x : Satisfies M x (axiomB (.atom 0)) := hB valuation x
+    change Satisfies M x (.atom 0) →
+      Satisfies M x (Formula.box (Formula.diamond (.atom 0))) at hB_x
+    have h_atom_x : Satisfies M x (.atom 0) := by
+      change valuation x 0
+      exact ⟨h_yx, rfl⟩
+    have hbox_diamond : Satisfies M x (Formula.box (Formula.diamond (.atom 0))) :=
+      hB_x h_atom_x
+    have hbox_neg : Satisfies M y (Formula.box (Formula.neg (.atom 0))) := by
+      intro z hyz
+      change Satisfies M z (Formula.neg (.atom 0))
+      change ¬valuation z 0
+      intro h_atom
+      exact h_atom.1 hyz
+    have hdiamond : Satisfies M y (Formula.diamond (.atom 0)) := hbox_diamond y hxy
+    exact False.elim (hdiamond hbox_neg)
+
+theorem frame_valid_axiomB_iff_symmetric {F : Frame} :
+    F.Valid (axiomB (.atom 0) : Formula Nat) ↔ F.Symmetric := by
+  constructor
+  · exact symmetric_of_frame_valid_axiomB
+  · exact frame_valid_axiomB_of_symmetric
+
+/-- The Euclidean axiom 5. -/
+def axiomFive (φ : Formula Atom) : Formula Atom :=
+  .imp (Formula.diamond φ) (Formula.box (Formula.diamond φ))
+
+theorem frame_valid_axiomFive_of_euclidean {F : Frame} (hR : F.Euclidean) :
+    F.Valid (axiomFive (.atom 0) : Formula Nat) := by
+  intro valuation x
+  let M : Model Nat := Model.fromFrame F valuation
+  change Satisfies M x (Formula.diamond (.atom 0)) →
+    Satisfies M x (Formula.box (Formula.diamond (.atom 0)))
+  intro hdiamond y hxy
+  change Satisfies M y (Formula.diamond (.atom 0))
+  change Satisfies M y (Formula.box (Formula.neg (.atom 0))) → False
+  intro hbox_neg_y
+  apply hdiamond
+  intro z hxz
+  exact hbox_neg_y z (hR hxy hxz)
+
+theorem euclidean_of_frame_valid_axiomFive {F : Frame}
+    (h5 : F.Valid (axiomFive (.atom 0) : Formula Nat)) : F.Euclidean := by
+  intro x y z hxy hxz
+  by_cases h_yz : F.Rel y z
+  · exact h_yz
+  · let valuation : F.World → Nat → Prop := fun w a => ¬F.Rel y w ∧ a = 0
+    let M : Model Nat := Model.fromFrame F valuation
+    have h5_x : Satisfies M x (axiomFive (.atom 0)) := h5 valuation x
+    change Satisfies M x (Formula.diamond (.atom 0)) →
+      Satisfies M x (Formula.box (Formula.diamond (.atom 0))) at h5_x
+    have h_atom_z : Satisfies M z (.atom 0) := by
+      change valuation z 0
+      exact ⟨h_yz, rfl⟩
+    have hdiamond_x : Satisfies M x (Formula.diamond (.atom 0)) := by
+      change Satisfies M x (Formula.box (Formula.neg (.atom 0))) → False
+      intro hbox_neg
+      exact (hbox_neg z hxz) h_atom_z
+    have hbox_diamond : Satisfies M x (Formula.box (Formula.diamond (.atom 0))) :=
+      h5_x hdiamond_x
+    have hdiamond_y : Satisfies M y (Formula.diamond (.atom 0)) := hbox_diamond y hxy
+    have hbox_neg_y : Satisfies M y (Formula.box (Formula.neg (.atom 0))) := by
+      intro w hyw
+      change Satisfies M w (Formula.neg (.atom 0))
+      change ¬valuation w 0
+      intro h_atom
+      exact h_atom.1 hyw
+    exact False.elim (hdiamond_y hbox_neg_y)
+
+theorem frame_valid_axiomFive_iff_euclidean {F : Frame} :
+    F.Valid (axiomFive (.atom 0) : Formula Nat) ↔ F.Euclidean := by
+  constructor
+  · exact euclidean_of_frame_valid_axiomFive
+  · exact frame_valid_axiomFive_of_euclidean
 
 theorem frame_valid_axiomD_of_serial {F : Frame} (hR : F.Serial) :
     F.Valid (axiomD (.atom 0) : Formula Nat) := by

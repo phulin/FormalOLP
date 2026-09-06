@@ -96,6 +96,14 @@ def Transitive (F : Frame) : Prop :=
 /-- Every world has at least one accessible successor. -/
 def Serial (F : Frame) : Prop := ∀ x, ∃ y, F.Rel x y
 
+/-- A symmetric accessibility relation can be traversed in either direction. -/
+def Symmetric (F : Frame) : Prop :=
+  ∀ ⦃x y⦄, F.Rel x y → F.Rel y x
+
+/-- A Euclidean relation preserves a common successor from either branch. -/
+def Euclidean (F : Frame) : Prop :=
+  ∀ ⦃x y z⦄, F.Rel x y → F.Rel x z → F.Rel y z
+
 theorem valid_box {φ : Formula Atom} (h : Valid F φ) : Valid F (.box φ) := by
   intro valuation x
   exact Satisfies.necessitation (fun y => h valuation y)
