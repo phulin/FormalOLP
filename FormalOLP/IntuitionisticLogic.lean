@@ -1,13 +1,12 @@
 import FormalOLP.IntuitionisticLogic.Kripke
 import FormalOLP.IntuitionisticLogic.Soundness
+import FormalOLP.IntuitionisticLogic.NaturalDeduction
 
 /-!
 # Intuitionistic logic
 
-Planned API for intuitionistic syntax, Kripke semantics, soundness,
-completeness, and tableaux.  The source separates these topics into the
-subdirectories recorded in `docs/topic-map.md`.
-
-The first native chain covers relational models, hereditary forcing, and the
-basic intuitionistic semantic soundness lemmas.
+This topic follows the Open Logic Project's intuitionistic syntax, relational
+semantics, and natural-deduction soundness chapters.  The native chain covers
+relational models, hereditary forcing, the shared natural-deduction object,
+and full soundness for its intuitionistic fragment.
 -/

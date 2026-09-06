@@ -1,4 +1,5 @@
 import FormalOLP.PropositionalLogic.Syntax
+import FormalOLP.PropositionalLogic.Semantics
 
 /-!
 # Propositional logic
@@ -10,4 +11,7 @@ shared with the first-order part, as documented in `docs/topic-map.md`.
 
 The native formula language is provided by
 `FormalOLP.PropositionalLogic.Syntax`.
+
+The valuation and entailment API is provided by
+`FormalOLP.PropositionalLogic.Semantics`.
 -/
