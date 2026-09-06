@@ -10,7 +10,8 @@ as membership. The API stops at extensionality, empty-set uniqueness, and
 pair uniqueness; it does not assert a full ZF or ZFC model.
 
 The corresponding OLP statements are in
-`OpenLogic/content/set-theory/story/extensionality.tex` and the axiom list in
+`OpenLogic/content/set-theory/story/extensionality.tex`,
+`OpenLogic/content/set-theory/z/pairs.tex`, and the ZFC axiom list in
 `OpenLogic/content/set-theory/cardinals/milestone.tex`.
 -/
 

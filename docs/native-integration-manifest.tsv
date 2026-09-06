@@ -1,0 +1,26 @@
+# Native integration file manifest.
+#
+# Columns: native_path<TAB>sha256<TAB>source_kind<TAB>attribution_evidence<TAB>olp_source<TAB>provenance_ledger
+#
+# OpenLogic/LICENSE.md records the Open Logic Text's CC BY 4.0 attribution
+# terms.  It is evidence for the cited source material, not a license choice
+# for new FormalOLP Lean code.  The ten `native-adaptation` rows also retain
+# all three Pool license/notice records.  The two `existing-scaffold` rows
+# predate the native Pool-guided integrations and therefore cite only the OLP
+# attribution record.  The last column points to the applicable ledger.
+#
+# The scope contains ten new integration children and two pre-existing
+# Mathlib-backed scaffold files.  The source kind makes that distinction
+# explicit instead of treating every native file as Pool-adapted.
+FormalOLP/SetsFunctionsRelations.lean	6991ed17783a4224d57da03d4d72ed22ef51cb7658b663132098515ef0710bb1	existing-scaffold	OpenLogic/LICENSE.md	OpenLogic/content/sets-functions-relations/sets/proofs-about-sets.tex	docs/topic-map.md
+FormalOLP/FirstOrderLogic/SemanticNotions.lean	c140a67b4b81beababceb4d5efc7ad417a21fee1a1abf93a942a415ae90c6eb4	existing-scaffold	OpenLogic/LICENSE.md	OpenLogic/content/first-order-logic/syntax-and-semantics/semantic-notions.tex	docs/topic-map.md
+FormalOLP/SetsFunctionsRelations/Functions.lean	0c849eb4eb1e15cf08b9b3f2d94316231e320e7320053cbfc26c1b0b2e7ad698	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/sets-functions-relations/functions/function-kinds.tex	docs/lean-pool-provenance.md
+FormalOLP/Computability/RelativeComputability.lean	06be7270dbc2f2d6a1cb17bf5f989def27549bc84640bda9ce7be9af205a5646	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/computability/computability-theory/prop-reduce.tex	docs/lean-pool-provenance.md
+FormalOLP/Computability/TuringReducibility.lean	13c68a1a80c4e1700ffbcdfbb1046ad25b955a906801d66743c6697cfb26cef8	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/computability/computability-theory/prop-reduce.tex	docs/lean-pool-provenance.md
+FormalOLP/PropositionalLogic/Syntax.lean	57f63531c009b8f9abe69831ee717f9fbdde6ad1be41f00a7daac3bb780c1bf9	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/intuitionistic-logic/introduction/syntax.tex	docs/lean-pool-provenance.md
+FormalOLP/IntuitionisticLogic/Kripke.lean	4b5fcf22d75b80848616d715534e957a6c15b47c3a8baca0e71fa0854e44a366	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/intuitionistic-logic/semantics/relational-models.tex	docs/lean-pool-provenance.md
+FormalOLP/IntuitionisticLogic/Soundness.lean	ddfbee07a312d45e9a5c05b7f385dc0794dc6ff86540d8710e9ffc50fb74e6bc	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/intuitionistic-logic/soundness-completeness/soundness-nd.tex	docs/lean-pool-provenance.md
+FormalOLP/SetTheory/Basic.lean	5a5015e8eb14290d59b0247ebd3af343ae9aa7254b13da783e7914c172958c48	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/set-theory/story/extensionality.tex	docs/lean-pool-provenance.md
+FormalOLP/NormalModalLogic/Syntax.lean	cb62f150100399168f8d7e81645d98904b736dea980b69a4d0f85e1ff38710ba	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/normal-modal-logic/syntax-and-semantics/relational-models.tex	docs/lean-pool-provenance.md
+FormalOLP/NormalModalLogic/Semantics.lean	75e81b986a171db4d9f3470dabfe2c904db336d02a8b7fb81a3b70f99212eb9a	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/normal-modal-logic/syntax-and-semantics/relational-models.tex	docs/lean-pool-provenance.md
+FormalOLP/NormalModalLogic/Soundness.lean	1c9f8caf770d6c9b11d7be9e65ee85ea4d42c66855a2f2171bd74ad507cef781	native-adaptation	OpenLogic/LICENSE.md;third_party/lean-pool/LICENSE;third_party/lean-pool/NOTICE;third_party/lean-pool/NOTICE.extra.yml	OpenLogic/content/normal-modal-logic/frame-definability/properties-accessibility.tex	docs/lean-pool-provenance.md

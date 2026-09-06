@@ -5,15 +5,17 @@ import FormalOLP.IntuitionisticLogic.Kripke
 
 This module proves the elementary intuitionistic axiom and rule instances
 needed before a full derivation system is introduced.  The OLP source is the
-relational-model definition and theorem `thm:soundness` in
+relational-model material and theorem `thm:soundness` in
 `OpenLogic/content/intuitionistic-logic/soundness-completeness/soundness-nd.tex`;
-the proofs below are new native proofs.
+the proofs below are new native semantic lemmas.  This module does not define
+a derivation object or claim the full natural-deduction soundness theorem.
 
 The proof targets correspond mathematically to Pool's
 `LO.IntProp.Formula.Kripke.ValidOnModel.andElim₁`, `andElim₂`, `andInst₃`,
 `orInst₁`, `orInst₂`, `orElim`, `imply₁`, `imply₂`, `mdp`, and `efq` in
-`LeanPool/Incompleteness/Foundation/IntProp/Kripke/Basic.lean`.  No Pool
-declaration is imported.
+`LeanPool/Incompleteness/Foundation/IntProp/Kripke/Basic.lean`; the matching
+frame-level declarations are under
+`LO.IntProp.Formula.Kripke.ValidOnFrame`.  No Pool declaration is imported.
 -/
 
 namespace FormalOLP.IntuitionisticLogic

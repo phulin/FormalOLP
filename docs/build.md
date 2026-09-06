@@ -28,39 +28,27 @@ lake build TauCeti.Algebra.Algebra.Hom
 lake env lean -E warning test/Compatibility.lean
 ```
 
-The vendored Lean Pool snapshot is a local `LeanPool` library with nine
-explicit entry roots.  Verify its path and hash inventory before building the
-entries:
+The native FormalOLP gate is the library build, the warning-as-error check,
+and the defining-module axiom audit.  Run these checks for every native topic
+change:
 
 ```sh
-scripts/check-leanpool-provenance.sh
-lake build LeanPool.Computability LeanPool.FoZfc \
-  LeanPool.FormalizationOfBoundedArithmetic LeanPool.Incompleteness \
-  LeanPool.PartialCombinatoryAlgebras LeanPool.ZFLean \
-  LeanPool.Lean4GlCoalgebras LeanPool.LeanModelChecking LeanPool.Lentil
-lake env lean -E warning test/LeanPoolCompatibility.lean
-lake env lean -E warning test/LeanPoolAxioms.lean
+lake build FormalOLP
+lake env lean -DwarningAsError=true FormalOLP.lean
+lake env lean -DwarningAsError=true test/FormalOLPAxioms.lean
+scripts/check-native-integration.sh
+scripts/check-native-integration-test.sh
 ```
 
-The Pool snapshot was authored against a different Mathlib revision.  The
-Recorded compatibility import changes are listed in the provenance manifest;
-inherited deprecation warnings and any slow upstream declarations
-remain visible in the entry build output.  The aggregate smoke test also
-imports `TauCeti.Algebra.Algebra.Hom` to exercise the concrete Tau Ceti
-boundary.  The full aggregate remains pending if a vendored entry has not
-finished building; the current Incompleteness Metamath closure includes a
-resource-intensive inherited declaration.
+`test/FormalOLPAxioms.lean` audits every declaration defined by a
+`FormalOLP.*` module with `Lean.collectAxioms`; it allows only
+`Classical.choice`, `propext`, and `Quot.sound`.  The native provenance check
+verifies the declared integration files, their review hashes, the OLP source
+and attribution references, and the absence of active `LeanPool` imports.
 
-Current vendor verification has eight passing entry builds: Computability,
-FoZfc, FormalizationOfBoundedArithmetic, PartialCombinatoryAlgebras, ZFLean,
-Lean4GlCoalgebras, LeanModelChecking, and Lentil.  The Incompleteness entry
-remains blocked while the inherited `Formula`/`Functions` performance issue is
-investigated.  The aggregate compatibility smoke test has not passed yet.
-
-`test/LeanPoolAxioms.lean` walks the declarations recorded in each imported
-`LeanPool.*` module and checks their transitive axioms with
-`Lean.collectAxioms`.  It permits only `Classical.choice`, `propext`, and
-`Quot.sound`; it reports `sorryAx` and all other axioms as failures.  While
-the Incompleteness entry is unavailable, the same audit with that import
-removed passes for 11,836 declarations.  Run the documented command after
-all nine entry roots have built for the complete snapshot.
+The former Lean Pool source staging was removed after native integrations were
+completed.  The native declaration mapping and source guidance are recorded in
+[`docs/lean-pool-provenance.md`](lean-pool-provenance.md) and
+[`docs/lean-pool-integration.md`](lean-pool-integration.md).  The pinned source
+snapshot, per-file hashes, and compatibility history remain historical records
+under [`docs/archive/`](archive/README.md); they are not active build inputs.
