@@ -39,6 +39,18 @@ declare -A expected_kind=(
   [FormalOLP/NormalModalLogic/Syntax.lean]=native-adaptation
   [FormalOLP/NormalModalLogic/Semantics.lean]=native-adaptation
   [FormalOLP/NormalModalLogic/Soundness.lean]=native-adaptation
+  [FormalOLP/AppliedModalLogic/Epistemic.lean]=native-olp
+  [FormalOLP/Counterfactuals/Sphere.lean]=native-olp
+  [FormalOLP/Incompleteness/RobinsonArithmetic.lean]=native-olp
+  [FormalOLP/IntuitionisticLogic/NaturalDeduction.lean]=native-olp
+  [FormalOLP/ModelTheory/Basic.lean]=native-mathlib
+  [FormalOLP/ProofTheory/NaturalDeduction.lean]=native-olp
+  [FormalOLP/PropositionalLogic/Semantics.lean]=native-olp
+  [FormalOLP/SecondOrderLogic/Semantics.lean]=native-olp
+  [FormalOLP/TuringMachines/Basic.lean]=native-mathlib
+  [FormalOLP/Methods/Induction.lean]=native-olp
+  [FormalOLP/ManyValuedLogic/Kleene.lean]=native-olp
+  [FormalOLP/LambdaCalculus/DeBruijn.lean]=native-olp
 )
 rows=0
 

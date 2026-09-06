@@ -14,15 +14,29 @@ checked. Its immutable source audit and per-file hashes remain in
 - `SetsFunctionsRelations.Functions`: domain/codomain-aware composition and
   inverse consequences using Mathlib `Set` APIs.
 - `IntuitionisticLogic.Kripke` and `Soundness`: partial-order Kripke forcing,
-  persistence, and elementary semantic axiom/rule validity. Full natural
-  deduction and its soundness theorem remain pending.
+  persistence, and elementary semantic axiom/rule validity. `NaturalDeduction`
+  now supplies the separate intuitionistic derivation object and full
+  soundness chain; completeness remains pending.
 - `SetTheory.Basic`: membership language realization, extensionality, and
   empty-set, pair, and singleton existence/uniqueness consequences at the
   model level. Full ZF/ZFC axiom schemata remain pending.
 - `NormalModalLogic`: native K/T/D/4 Kripke semantics and frame facts.
+- `PropositionalLogic` and `ProofTheory`: native valuation semantics and the
+  finite-support N2c derivation/soundness chain.
+- `AppliedModalLogic`, `Counterfactuals`, `SecondOrderLogic`, `ModelTheory`,
+  `TuringMachines`, and the Robinson-Q part of `Incompleteness`: each now has
+  a checked initial native or Mathlib-backed chain recorded in the provenance
+  ledger.
+- `Methods`: reusable weak, strong, well-founded, and measure induction
+  principles are now checked; the remaining proof-methods prose is pending.
 - `Computability.RelativeComputability` and `TuringReducibility`: staged
-  relative recursion and Turing-reducibility support. Equivalence with the
-  OLP machine or many-one definitions remains pending.
+  relative recursion, many-one set reductions, and Turing-reducibility
+  support. The machine/`RecursiveIn` equivalence remains pending.
+
+`Methods`, the K3 fragment of `ManyValuedLogic`, and the indexed De Bruijn
+foundation of `LambdaCalculus` now have checked native chains. Lambda's named
+syntax, Church--Rosser, normalization, and definability interfaces remain
+pending.
 
 Each integration records the OLP source path, the exact Pool declaration
 family used as guidance, native declarations, and a proof boundary. Future

@@ -3,14 +3,15 @@ import Mathlib.Data.Set.Basic
 /-!
 # Selection semantics for counterfactuals
 
-This is an explicitly selected closest-world variant of the sphere clause in
+This is an explicitly selected set-valued closest-world variant of the sphere clause in
 `OpenLogic/content/counterfactuals/minimal-change-semantics/sphere-models.tex`.
 For each world and antecedent proposition, `Closest` selects the worlds in
 the chosen innermost antecedent-admitting sphere.  The source sphere model
 allows an infinite descending system with no innermost sphere; this API adds
-the Stalnaker-style limit condition that every nonempty antecedent has a
-nonempty selection.  It also records the selection-subset condition and
-strong centering.  The latter yields centered conditional modus ponens.
+a limit condition that every nonempty antecedent has a nonempty selection.
+It also records the selection-subset condition and strong centering, without
+requiring the selected set to be a singleton.  The latter yields centered
+conditional modus ponens.
 The module proves only the closest-world principles listed here; it makes no
 material-implication or counterfactual-transitivity identification.
 -/

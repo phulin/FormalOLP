@@ -21,8 +21,16 @@ Current native chains are:
   realizes extensionality, empty-set, pair, and singleton uniqueness at the
   model level. It does not formalize full ZF/ZFC axiom schemata.
 - Normal modal logic: native K/T/D/4 Kripke validity and frame facts.
-- Computability: native relative recursion and Turing-reducibility support;
-  the OLP machine/many-one equivalence remains open.
+- Normal modal extensions: native B/5 frame correspondences under symmetry and
+  Euclideanity.
+- Propositional/proof theory: native valuation semantics and finite-support
+  N2c natural deduction soundness.
+- Applied modal, counterfactual, second-order, model-theory, Turing-machine,
+  and Robinson-Q topics each have an initial checked native or Mathlib-backed
+  chain; their theorem-level boundaries are recorded in the provenance ledger.
+- Computability: native relative recursion, many-one set reductions, and
+  Turing-reducibility support; the machine/`RecursiveIn` equivalence remains
+  open.
 
 Every row in the provenance ledger identifies the OLP source path, exact Pool
 source family used as guidance, native declarations, and proof boundary.
