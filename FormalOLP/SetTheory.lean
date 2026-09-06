@@ -1,3 +1,5 @@
+import FormalOLP.SetTheory.Basic
+
 /-!
 # Set theory
 
@@ -6,5 +8,7 @@ replacement, cardinals, cardinal arithmetic, the cumulative hierarchy, and
 choice.  The elementary set API in `FormalOLP.SetsFunctionsRelations` is kept
 separate from this axiomatic and transfinite material.
 
-This scaffold contains no set-theoretic axioms or theorems.
+The initial API in `FormalOLP.SetTheory.Basic` covers the membership
+language, extensionality, empty-set uniqueness, and pair uniqueness.  It does
+not assert a full ZF or ZFC model.
 -/

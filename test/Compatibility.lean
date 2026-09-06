@@ -20,6 +20,13 @@ textbook-facing module tree while still exercising the shared dependency graph.
 #check FormalOLP.Computability.turingEquivalent_equivalence
 #check FormalOLP.Computability.setTuringReducible
 #check FormalOLP.Computability.setTuringEquivalent_equivalence
+#check FormalOLP.SetTheory.membershipFormula
+#check FormalOLP.SetTheory.realize_membership
+#check FormalOLP.SetTheory.ModelExtensionality.emptyset_unique
+#check FormalOLP.SetTheory.ModelExtensionality.emptyset_exists_unique
+#check FormalOLP.SetTheory.ModelExtensionality.pair_unique
+#check FormalOLP.SetTheory.ModelExtensionality.pair_exists_unique
+#check FormalOLP.SetTheory.ModelExtensionality.singleton_exists_unique
 
 example (f g h : ℕ →. ℕ)
     (hfg : FormalOLP.Computability.turingReducible f g)
