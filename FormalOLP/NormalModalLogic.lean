@@ -1,10 +1,17 @@
+import FormalOLP.NormalModalLogic.Syntax
+import FormalOLP.NormalModalLogic.Semantics
+import FormalOLP.NormalModalLogic.Soundness
+
 /-!
 # Normal modal logic
 
-Planned API for modal syntax and relational semantics, axiomatic systems,
-frame definability, completeness, filtrations, tableaux, and sequents.  This
-module is reserved for normal modal logic; epistemic and temporal applications
-are in `FormalOLP.AppliedModalLogic`.
+This topic follows the Open Logic Project's normal-modal-logic chapters.  The
+syntax, relational models, and first soundness/frame-definability results are
+kept in small native modules so later proof systems can build on them.
 
-The scaffold does not claim a modal theorem yet.
+The relational definitions are adapted theorem-by-theorem from the modal
+development in the pinned Lean Pool snapshot (`LeanPool/Incompleteness/
+Foundation/Modal/Kripke/Basic.lean`, Pool revision
+`c8ddda0a64f21cb019720cdda48c94354d4091e7`).  These declarations live in the
+FormalOLP namespace and are independently proved for this scaffold.
 -/
