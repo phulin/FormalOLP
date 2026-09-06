@@ -1,4 +1,5 @@
 import FormalOLP.Computability.RelativeComputability
+import Mathlib.Computability.Reduce
 
 /-!
 # Turing reducibility
@@ -18,6 +19,44 @@ namespace.
 namespace FormalOLP.Computability
 
 variable {f g h : ℕ →. ℕ}
+
+/-!
+## Many-one reductions of sets
+
+The native Mathlib relation `ManyOneReducible` is specialized here to subsets of
+`ℕ`.  This keeps the witness visible: a reduction consists of a computable map
+and a proof that it preserves membership.  The implication to oracle
+reducibility below is deliberately one-way; no equivalence with the
+`RecursiveIn` model is assumed.
+-/
+
+/-- A computable many-one reduction between sets of natural numbers. -/
+abbrev setManyOneReducible (A B : Set ℕ) : Prop :=
+  ManyOneReducible (fun n => n ∈ A) (fun n => n ∈ B)
+
+theorem setManyOneReducible_refl (A : Set ℕ) : setManyOneReducible A A := by
+  exact manyOneReducible_refl _
+
+theorem setManyOneReducible_trans {A B C : Set ℕ}
+    (hAB : setManyOneReducible A B) (hBC : setManyOneReducible B C) :
+    setManyOneReducible A C := by
+  exact ManyOneReducible.trans hAB hBC
+
+/-!
+The following form of transitivity records the composed computable witness
+explicitly.  It is useful when a later theorem needs to inspect the map rather
+than only use the reducibility proposition.
+-/
+
+theorem setManyOneReducible_compose {A B C : Set ℕ} {u v : ℕ → ℕ}
+    (hu : Computable u) (hv : Computable v)
+    (hAB : ∀ n, n ∈ A ↔ u n ∈ B)
+    (hBC : ∀ n, n ∈ B ↔ v n ∈ C) :
+    setManyOneReducible A C := by
+  refine ⟨v ∘ u, hv.comp hu, ?_⟩
+  intro n
+  rw [Function.comp_apply]
+  exact (hAB n).trans (hBC (u n))
 
 /-- `f` is computable with oracle access to `g`. -/
 abbrev turingReducible (f g : ℕ →. ℕ) : Prop :=
@@ -79,6 +118,36 @@ theorem setTuringReducible_trans {A B C : Set ℕ}
     (hAB : setTuringReducible A B) (hBC : setTuringReducible B C) :
     setTuringReducible A C :=
   turingReducible_trans hAB hBC
+
+/-!
+## Many-one reductions give oracle reductions
+
+The proof composes the oracle with the computable witness inside the explicit
+`RecursiveIn` constructors.  This establishes the expected soundness
+direction without identifying the two machine models.
+-/
+
+theorem setManyOneReducible_to_setTuringReducible {A B : Set ℕ}
+    (hAB : setManyOneReducible A B) : setTuringReducible A B := by
+  rcases hAB with ⟨u, hu, hmem⟩
+  have huNat : Nat.Partrec (u : ℕ →. ℕ) := Partrec.nat_iff.1 hu.partrec
+  let hu' : RecursiveIn {setCharacteristic B} (fun n => Part.some (u n)) :=
+    recursiveIn_of_partrec huNat
+  let hB : RecursiveIn {setCharacteristic B} (setCharacteristic B) :=
+    RecursiveIn.oracle _ (by simp)
+  have hcomp' : RecursiveIn {setCharacteristic B}
+      (fun n => Part.some (u n) >>= fun k => setCharacteristic B k) := by
+    exact RecursiveIn.comp hB hu'
+  have hcomp : RecursiveIn {setCharacteristic B}
+      (fun n => setCharacteristic B (u n)) := by
+    exact RecursiveIn.of_eq hcomp' (fun n => by simp)
+  refine RecursiveIn.of_eq hcomp ?_
+  intro n
+  simp only [setCharacteristic]
+  congr 1
+  by_cases hn : n ∈ A
+  · simp [hn, (hmem n).mp hn]
+  · simp [hn, (hmem n).not.mp hn]
 
 abbrev setTuringEquivalent (A B : Set ℕ) : Prop :=
   setTuringReducible A B ∧ setTuringReducible B A
